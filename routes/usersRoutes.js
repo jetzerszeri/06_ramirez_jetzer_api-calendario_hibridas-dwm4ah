@@ -27,6 +27,64 @@ router.get('/', async (req, res) => {
 
 })
 
+//retorna un usuario
+router.get('/:user_id', async (req, res) => {
+    try{
+        const { user_id } = req.params;
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+
+        const user = data.users.find(user => user.id == user_id);
+
+        const filteredEvents = data.events.filter(event => event.user_id === user.id);
+
+        if(!user){
+            res.status(404).json({
+                msg: 'Usuario no encontrado'
+            });
+            return;
+        }
+
+        res.json({
+            // msg: 'Usuario encontrado', 
+            user: user.username,
+            id: user.id,
+            events: filteredEvents
+        });
+
+
+    }catch(error){
+        res.json({
+            msg: 'Error en el servidor ' + error, 
+        });
+    }
+})
+
+
+//agregar un nuevo usuario al json local
+router.post('/', async (req, res) => {
+    try {
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+        const new_user = req.body;
+
+        let user_list = data.users;
+        user_list.push(new_user);
+
+        await fs.writeFile(rutaJSON, JSON.stringify(data, null, 2));
+
+        res.json({
+            msg: 'El usuario fue agregado correctamente', 
+            data: new_user
+        });
+        
+    }catch(error){
+        res.json({
+            msg: 'Error en el servidor ' + error, 
+        });
+    }
+})
+
+
+
 
 
 
