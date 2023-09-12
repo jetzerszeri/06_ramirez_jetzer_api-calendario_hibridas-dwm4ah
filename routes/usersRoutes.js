@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 
 })
 
-//retorna un usuario
+//retorna un usuario y sus eventos
 router.get('/:user_id', async (req, res) => {
     try{
         const { user_id } = req.params;
@@ -35,29 +35,46 @@ router.get('/:user_id', async (req, res) => {
 
         const user = data.users.find(user => user.id == user_id);
 
-        const filteredEvents = data.events.filter(event => event.user_id === user.id);
-
+        
         if(!user){
             res.status(404).json({
                 msg: 'Usuario no encontrado'
             });
             return;
+        } else {
+            const filteredEvents = data.events.filter(event => event.user_id === user.id);
+
+            //validating user
+            const user_info = req.body;
+    
+            if(user_info.username !== user.username || user_info.password !== user.password){
+                res.status(401).json({
+                    msg: 'Credenciales inválidas'
+                });
+                return;
+            } else {
+                res.status(200).json({
+                    // msg: 'Usuario encontrado', 
+                    user: user.username,
+                    id: user.id,
+                    events: filteredEvents
+                });
+            }
         }
 
-        res.json({
-            // msg: 'Usuario encontrado', 
-            user: user.username,
-            id: user.id,
-            events: filteredEvents
-        });
-
-
+        
+    
     }catch(error){
         res.json({
             msg: 'Error en el servidor ' + error, 
         });
     }
 })
+
+
+
+
+
 
 
 //agregar un nuevo usuario al json local
