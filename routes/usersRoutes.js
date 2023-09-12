@@ -8,17 +8,16 @@ const rutaJSON = './data.json';
 //retorna el listado de los usuarios
 router.get('/', async (req, res) => {
     try {
-
         // //recibo los valores de la query de la url
         // const { limit, offset } = req.query;
 
-        // const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
-        // res.json({
-        //     msg: 'Listado de tareas con limite' + limit + ' y offset ' + offset, 
-        //     data
-        // });
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+        res.json({
+            msg: 'Listado de usuarios del Calendario', 
+            usuarios: data.users
+        });
 
-        res.send('<h1>Listado de usuarios del Calendario</h1>')
+        // res.send('<h1>Listado de usuarios del Calendario</h1>')
         
     }catch(error){
         res.json({
