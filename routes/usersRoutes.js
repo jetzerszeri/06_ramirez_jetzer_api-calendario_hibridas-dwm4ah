@@ -72,7 +72,65 @@ router.get('/:user_id', async (req, res) => {
 })
 
 
+router.post('/:user_id', async (req, res) => {
+    try{
+        const { user_id } = req.params;
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
 
+        const user = data.users.find(user => user.id == user_id);
+
+        
+        if(!user){
+            res.status(404).json({
+                msg: 'Usuario no encontrado'
+            });
+            return;
+        } else {
+
+            //validating user
+            const user_info = req.body;
+
+    
+            if(user_info.username !== user.username || user_info.password !== user.password){
+                res.status(401).json({
+                    msg: 'Credenciales inválidas'
+                });
+                return;
+            } else {
+                const filteredEvents = data.events.filter(event => event.user_id === user.id);
+
+                let event_info = user_info.new_event;
+                let new_event = {
+                    id: data.events.length + 1,
+                    user_id: user.id,
+                    title: event_info.title,
+                    description: event_info.description,
+                    date: event_info.date,
+                    color: event_info.color,
+                }
+                data.events.push(new_event);
+
+                // const event_lists = data.events;
+                // event_lists.push(new_event);
+                
+                await fs.writeFile(rutaJSON, JSON.stringify(data, null, 2));
+
+                res.status(200).json({
+                    msg: 'Evento agregado existosamente', 
+                    user: user.username,
+                    events: new_event,
+                });
+            }
+        }
+
+        
+    
+    }catch(error){
+        res.json({
+            msg: 'Error en el servidor ' + error, 
+        });
+    }
+})
 
 
 

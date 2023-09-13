@@ -45,6 +45,14 @@
       "description": "Comida con mi mamá",
       "date": "2023-09-10",
       "color": "#fffff"
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "title": "comidaNUEVA",
+      "description": "Comida con mi mamá EVENTO AGREGAADO",
+      "date": "2023-09-11",
+      "color": "#00000"
     }
   ]
 }
