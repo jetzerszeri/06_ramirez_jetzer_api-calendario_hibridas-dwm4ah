@@ -28,14 +28,6 @@
   ],
   "events": [
     {
-      "id": "1",
-      "user_id": 1,
-      "title": "EVENTO EDITADO",
-      "description": "Comida con mi mamá EDITADO",
-      "date": "2023-09-15",
-      "color": "#11111"
-    },
-    {
       "id": 2,
       "user_id": 2,
       "title": "Cita",

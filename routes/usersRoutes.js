@@ -243,7 +243,72 @@ router.put('/:user_id/:event_id', async (req, res) => {
 })
 
 
+//Eliminar una tarea de calendario
+router.delete('/:user_id/:event_id', async (req, res) => {
+    try{
+        const { user_id, event_id } = req.params;
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
 
+        const user = data.users.find(user => user.id == user_id);
+
+        
+        if(!user){
+            res.status(404).json({
+                msg: 'Usuario no encontrado'
+            });
+            return;
+        } else {
+
+            //validating user
+            const user_info = req.body;
+            const event_user_id = data.events.find(event => event.id == event_id);
+            // console.log(event_user_id.user_id);
+
+            if(user_info.username !== user.username || user_info.password !== user.password){
+                res.status(401).json({
+                    msg: 'Credenciales inválidas'
+                });
+                return;
+            } else if (event_user_id.user_id !== user.id){
+                res.status(401).json({
+                    msg: 'No tiene permiso para eliminar este evento'
+                });
+                return;
+                
+            }else {
+
+                //busco el evento que quiero eliminar
+                const event_index = data.events.findIndex(event => event.id == event_id);
+
+                console.log('index del evento que quiero eliminar: ' + event_index);
+
+                if(event_index > -1){
+                    data.events.splice(event_index, 1);
+
+                    //guardo los cambios en el archivo
+                    await fs.writeFile(rutaJSON, JSON.stringify(data, null, 2));
+
+                    res.status(200).json({
+                        msg: 'Evento eliminado existosamente', 
+                        deleted_event: data.events[event_index],
+                    });
+                } else {
+                    res.status(404).json({
+                        msg: 'Evento no encontrado'
+                    });
+                    return;
+                }
+            }
+        }
+
+        
+    
+    }catch(error){
+        res.json({
+            msg: 'Error en el servidor ' + error, 
+        });
+    }
+})
 
 
 
