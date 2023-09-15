@@ -312,6 +312,57 @@ router.delete('/:user_id/:event_id', async (req, res) => {
 
 
 
+//Listar tareas de un día específico
+router.get('/:user_id/:date', async (req, res) => {
+    try{
+        const { user_id, date } = req.params;
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+
+        const user = data.users.find(user => user.id == user_id);
+
+        if(!user){
+            res.status(404).json({
+                msg: 'Usuario no encontrado'
+            });
+            return;
+        } else {
+            const filteredEvents = data.events.filter(event => event.user_id === user.id);
+            const filteredEventsByDate = filteredEvents.filter(event => event.date === date);
+
+            //validating user
+            const user_info = req.body;
+    
+            if(user_info.username !== user.username || user_info.password !== user.password){
+                res.status(401).json({
+                    msg: 'Credenciales inválidas'
+                });
+                return;
+            } else {
+
+                if (filteredEventsByDate.length === 0){
+                    res.status(404).json({
+                        msg: `No se encontraron eventos para el día ${date}`
+                    });
+                    return;
+                } else{
+
+                    res.status(200).json({
+                        msg: `Se encontraron ${filteredEventsByDate.length} eventos para el día ${date}`, 
+                        events: filteredEventsByDate
+                    });
+                }
+            }
+        }
+
+        
+    
+    }catch(error){
+        res.json({
+            msg: 'Error en el servidor ' + error, 
+        });
+    }
+})
+
 
 
 //exporto el objeto router

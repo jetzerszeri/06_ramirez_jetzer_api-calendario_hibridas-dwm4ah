@@ -29,10 +29,10 @@
   "events": [
     {
       "id": 2,
-      "user_id": 2,
+      "user_id": 1,
       "title": "Cita",
       "description": "Cita con el doctor",
-      "date": "2023-09-10",
+      "date": "2023-09-11",
       "color": "#fffff"
     },
     {
