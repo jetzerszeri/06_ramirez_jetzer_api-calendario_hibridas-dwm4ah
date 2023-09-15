@@ -3,7 +3,6 @@ const express = require('express');
 const routerApi = require('./routes'); //no hace falta poner index.js -require('./routes/index');-
 
 const app = express();
-
 const port = 3001;
 
 

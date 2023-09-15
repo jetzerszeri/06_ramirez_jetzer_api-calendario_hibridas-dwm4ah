@@ -19,16 +19,21 @@
       "id": 4,
       "username": "user4",
       "password": "password4"
+    },
+    {
+      "id": 5,
+      "username": "user5",
+      "password": "password5"
     }
   ],
   "events": [
     {
-      "id": 1,
+      "id": "1",
       "user_id": 1,
-      "title": "Reunión",
-      "description": "Reunión con el jefe",
-      "date": "2023-09-10",
-      "color": "#000000"
+      "title": "EVENTO EDITADO",
+      "description": "Comida con mi mamá EDITADO",
+      "date": "2023-09-15",
+      "color": "#11111"
     },
     {
       "id": 2,
@@ -39,7 +44,15 @@
       "color": "#fffff"
     },
     {
-      "id": 3,
+      "id": "3",
+      "user_id": 1,
+      "title": "EVENTO EDITADO",
+      "description": "Comida con mi mamá EDITADO",
+      "date": "2023-09-15",
+      "color": "#11111"
+    },
+    {
+      "id": "4",
       "user_id": 1,
       "title": "comida",
       "description": "Comida con mi mamá",
@@ -47,11 +60,19 @@
       "color": "#fffff"
     },
     {
-      "id": 4,
-      "user_id": 1,
-      "title": "comidaNUEVA",
-      "description": "Comida con mi mamá EVENTO AGREGAADO",
-      "date": "2023-09-11",
+      "id": "5",
+      "user_id": 5,
+      "title": "comida",
+      "description": "Comida con mi mamá",
+      "date": "2023-09-10",
+      "color": "#fffff"
+    },
+    {
+      "id": 6,
+      "user_id": 5,
+      "title": "Lavar el auto",
+      "description": "debe estar limpio",
+      "date": "2023-09-09",
       "color": "#00000"
     }
   ]
